@@ -48,28 +48,33 @@ cases/
 git clone <this-repo> my-contest
 cd my-contest
 
-# 1. 把比赛网站下载的题目空工程解压后覆盖 code/
+# 1. 写本地配置（不进 git）
+Copy-Item prepare\contest.example.json prepare\contest.json
+Copy-Item prepare\remote\config.example.json prepare\remote\config.json
+#    按当前比赛改 contest.json；按当前题目改 remote\config.json
+
+# 2. 把比赛网站下载的题目空工程解压后覆盖 code/
 #    保持相对路径，例如 code/op_host/...、code/op_kernel/...
 
-# 2. 自检：环境、网络、题目模板、code/ 是否齐全
+# 3. 自检：环境、网络、题目模板、code/ 是否齐全
 python prepare/check_env.py
 
-# 3. 按 prepare/credentials/GET_COOKIE.md 取一次 Cookie（会过期，每次提交前重新取）
+# 4. 按 prepare/credentials/GET_COOKIE.md 取一次 Cookie（会过期，每次提交前重新取）
 
-# 4. 只核对要上传哪些文件，不提交
+# 5. 只核对要上传哪些文件，不提交
 python prepare/submit/auto_submit.py --dry-run
 
-# 5. 交一版基线，确认全部 case 通过
+# 6. 交一版基线，确认全部 case 通过
 python prepare/submit/auto_submit.py --label 001_baseline
 
-# 6. 题目不公开 shape 时，按 prepare/shape/README.md 逐轮探测，结果填进
+# 7. 题目不公开 shape 时，按 prepare/shape/README.md 逐轮探测，结果填进
 #    prepare/remote/config.json
 
-# 7. 可选：远端 910B 先编译并跑九点，减少无效提交
+# 8. 可选：远端 910B 先编译并跑九点，减少无效提交
 python prepare/remote/remote_verify.py all
 ```
 
-跑完第 5 步会得到：
+跑完第 6 步会得到：
 
 - 终端里的每个 case 用时表
 - `prepare/submit/results/judge_<标签>_<时间>.json` 原始结果
@@ -90,7 +95,9 @@ python prepare/remote/remote_verify.py all
 
 | 路径 | 作用 |
 | --- | --- |
-| `code/` | 比赛题目空工程落点，提交时上传这里的内容 |
+| `code/` | 比赛题目空工程落点，提交时上传这里的内容；仓库本身留空 |
+| `prepare/contest.example.json` | 赛事与题目 token 的模板，复制成 `contest.json` 使用 |
+| `prepare/remote/config.example.json` | 题目文件映射与 case 列表模板，复制成 `config.json` 使用 |
 | `prepare/check_env.py` | 前期准备自检，不提交、不改代码 |
 | `prepare/credentials/GET_COOKIE.md` | 如何取 Cookie 和 userId |
 | `prepare/shape/decode.py` | 按编码表把 Judge 用时解码成维度 |

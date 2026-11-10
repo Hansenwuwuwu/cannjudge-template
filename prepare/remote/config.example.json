@@ -1,0 +1,14 @@
+{
+  "op_name": "your_op",
+  "class_name": "YourOp",
+  "audit_name": "your_op_current_audit",
+  "audit_class": "YourOpCurrentAudit",
+  "aclnn_entry": "aclnnYourOpCurrentAudit",
+  "files": {
+    "host.cpp": "op_host/your_op.cpp",
+    "kernel.cpp": "op_kernel/your_op.cpp",
+    "tiling.h": "op_kernel/your_op_tiling.h",
+    "key.h": "op_kernel/tiling_key_your_op.h"
+  },
+  "cases": []
+}

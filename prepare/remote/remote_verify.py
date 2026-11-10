@@ -43,7 +43,10 @@ REMOTE_SCRIPTS = (
 def load_config(args) -> dict:
     path = Path(args.config).resolve()
     if not path.is_file():
-        raise SystemExit(f"缺少 {path}")
+        raise SystemExit(
+            f"缺少 {path}\n"
+            "复制 prepare/remote/config.example.json 为 prepare/remote/config.json，再按题目填写。"
+        )
     return json.loads(path.read_text(encoding="utf-8"))
 
 

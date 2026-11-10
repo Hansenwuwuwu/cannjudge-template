@@ -92,7 +92,13 @@ python prepare/remote/remote_verify.py all --host 10.0.0.1 --port 2222
 
 ## 题目配置
 
-上传哪四个文件、有哪些 case，全部写在 `config.json` 里，脚本不再写死题目：
+先复制模板：
+
+```powershell
+Copy-Item prepare\remote\config.example.json prepare\remote\config.json
+```
+
+`config.json` 不进 git，换题目只改它。上传哪四个文件、有哪些 case，全部写在里面：
 
 ```json
 {

@@ -100,12 +100,17 @@ def main() -> int:
     parser.add_argument("--group", default="")
     args = parser.parse_args()
 
+    contest, problem = api.resolve_targets(args.contest, args.problem)
+    if not contest or not problem:
+        print("未指定赛事/题目。复制 prepare/contest.example.json 为 prepare/contest.json，或传 --contest / --problem。")
+        return 1
+
     print("== Python ==")
     ok = check_python()
     print("\n== 目录 ==")
     ok = check_dirs() and ok
     print("\n== 网络与题目 ==")
-    ok = check_problem(args.contest, args.problem, args.group) and ok
+    ok = check_problem(contest, problem, args.group) and ok
     print("\n== 凭证 ==")
     check_credentials()
 

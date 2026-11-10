@@ -37,7 +37,7 @@ python prepare/submit/auto_submit.py --yes
 | `--poll-interval` | `3` | 轮询间隔（秒） |
 | `--max-polls` | `100` | 最多轮询次数 |
 | `--cookie` / `--user-id` | 空 | 覆盖存档凭证 |
-| `--contest` / `--problem` / `--group` | `gcc_2026_mfg` / `spmmsum` / 公开小组 | 赛事与题目 token |
+| `--contest` / `--problem` / `--group` | 读 `prepare/contest.json` / 同上 / 公开小组 | 赛事与题目 token |
 | `--extra-file` | 无 | 额外上传 `code_dir` 下的文件，可重复 |
 | `--yes` | 关 | 非交互，直接用存档 Cookie |
 

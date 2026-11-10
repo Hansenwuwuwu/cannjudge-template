@@ -167,8 +167,8 @@ def parse_args():
     parser.add_argument("--max-polls", type=int, default=MAX_POLLS)
     parser.add_argument("--cookie", default="")
     parser.add_argument("--user-id", default="")
-    parser.add_argument("--contest", default=api.DEFAULT_CONTEST)
-    parser.add_argument("--problem", default=api.DEFAULT_PROBLEM)
+    parser.add_argument("--contest", default=api.DEFAULT_CONTEST, help="赛事 token；省略时读 prepare/contest.json")
+    parser.add_argument("--problem", default=api.DEFAULT_PROBLEM, help="题目 token；省略时读 prepare/contest.json")
     parser.add_argument("--group", default="")
     parser.add_argument("--extra-file", action="append", default=[], help="额外上传 code_dir 下的文件，可重复")
     parser.add_argument("--yes", action="store_true", help="非交互：直接用已保存的 Cookie，不询问")
@@ -180,6 +180,15 @@ def main() -> int:
     args = parse_args()
     code_dir = Path(args.code_dir).resolve()
     label = args.label or default_label(code_dir)
+
+    contest, problem = api.resolve_targets(args.contest, args.problem)
+    if not contest or not problem:
+        print(
+            "未指定赛事/题目。复制 prepare/contest.example.json 为 prepare/contest.json，"
+            "或传 --contest / --problem。",
+            file=sys.stderr,
+        )
+        return 1
 
     cookie, user_id = api.resolve_credentials(
         args.cookie, args.user_id, interactive=not args.yes
@@ -205,7 +214,7 @@ def main() -> int:
 
     client = api.Client(cookie)
     try:
-        resolved = api.resolve_problem(client, args.contest, args.problem, args.group)
+        resolved = api.resolve_problem(client, contest, problem, args.group)
         template_files = api.load_template(client, resolved["problem_id"])
         editable = [item for item in template_files if item["editable"]]
         api.log("模板可编辑文件(" + str(len(editable)) + "): " + ", ".join(item["path"] for item in editable))

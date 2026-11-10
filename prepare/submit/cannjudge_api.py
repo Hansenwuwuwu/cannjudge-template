@@ -20,8 +20,9 @@ import urllib.request
 from pathlib import Path, PurePosixPath
 
 SITE = "https://cannjudge.cn"
-DEFAULT_CONTEST = "gcc_2026_mfg"
-DEFAULT_PROBLEM = "spmmsum"
+DEFAULT_CONTEST = ""
+DEFAULT_PROBLEM = ""
+CONTEST_CONFIG = Path(__file__).resolve().parents[1] / "contest.json"
 SECRET_DIR = Path.home() / ".cannjudge"
 COOKIE_FILE = SECRET_DIR / "cookie.txt"
 USER_ID_FILE = SECRET_DIR / "user_id.txt"
@@ -576,6 +577,22 @@ def _saved_age(path: Path) -> str:
     if age < 3600:
         return f"{age / 60:.0f} 分钟前"
     return f"{age / 3600:.1f} 小时前"
+
+
+def read_contest_config() -> dict:
+    try:
+        data = json.loads(CONTEST_CONFIG.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def resolve_targets(contest: str = "", problem: str = "") -> tuple[str, str]:
+    """参数 > 环境变量 > prepare/contest.json。"""
+    saved = read_contest_config()
+    contest = contest or os.environ.get("CANNJUDGE_CONTEST", "") or str(saved.get("contest") or "")
+    problem = problem or os.environ.get("CANNJUDGE_PROBLEM", "") or str(saved.get("problem") or "")
+    return contest.strip(), problem.strip()
 
 
 def resolve_credentials(

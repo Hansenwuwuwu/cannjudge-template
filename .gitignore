@@ -4,6 +4,10 @@ cookie.txt
 user_id.txt
 *.cookie
 
+# 本地比赛配置（示例文件进仓库，实际配置不进）
+prepare/contest.json
+prepare/remote/config.json
+
 # 提交结果与原始响应（本地保留，按需再决定是否入库）
 prepare/submit/results/*.json
 prepare/submit/results/last_submission.json

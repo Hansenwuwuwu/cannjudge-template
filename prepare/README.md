@@ -24,16 +24,17 @@ prepare/
 
 ## 顺序
 
-1. **自检**：`python prepare/check_env.py`，确认能连上 cannjudge.cn、能解析到当前题目
-2. **放空工程**：把比赛网站下载的题目工程整体覆盖到 `code/`，保持 `op_host/`、`op_kernel/` 相对路径
-3. **凭证**：按 [credentials/GET_COOKIE.md](credentials/GET_COOKIE.md) 取 Cookie 与 userId；Cookie 会过期，每轮提交前重取
-4. **只核对**：`python prepare/submit/auto_submit.py --dry-run`，确认要上传的文件
-5. **测 shape**（题目不公开时）：按 [shape/README.md](shape/README.md) 先用全 Pass 基线确认 case 数，再逐轮用空转探针测出每个 case 的维度，填进 `remote/config.json`
-6. **远端验证**（可选但推荐）：按 [remote/README.md](remote/README.md) 跑九点，先排除编译和数值问题
-7. **第一次真提交**：`python prepare/submit/auto_submit.py`，等 180 秒读九点
-8. **记基线**：把九点用时填进 [../optimize/baseline.md](../optimize/baseline.md)
+1. **本地配置**：复制 `contest.example.json` → `contest.json`、`remote/config.example.json` → `remote/config.json`，按当前比赛和题目填写；这两个文件不进 git
+2. **自检**：`python prepare/check_env.py`，确认能连上 cannjudge.cn、能解析到当前题目
+3. **放空工程**：把比赛网站下载的题目工程整体覆盖到 `code/`，保持 `op_host/`、`op_kernel/` 相对路径
+4. **凭证**：按 [credentials/GET_COOKIE.md](credentials/GET_COOKIE.md) 取 Cookie 与 userId；Cookie 会过期，每轮提交前重取
+5. **只核对**：`python prepare/submit/auto_submit.py --dry-run`，确认要上传的文件
+6. **测 shape**（题目不公开时）：按 [shape/README.md](shape/README.md) 先用全 Pass 基线确认 case 数，再逐轮用空转探针测出每个 case 的维度，填进 `remote/config.json`
+7. **远端验证**（可选但推荐）：按 [remote/README.md](remote/README.md) 跑九点，先排除编译和数值问题
+8. **第一次真提交**：`python prepare/submit/auto_submit.py`，等 180 秒读九点
+9. **记基线**：把九点用时填进 [../optimize/baseline.md](../optimize/baseline.md)
 
-第 7 步是链路验证，不是优化。哪怕九点全是 `Compile Error` 也算打通了链路——说明提交、等待、读结果三件事都通了，接下来只需要关心代码。
+第 8 步是链路验证，不是优化。哪怕九点全是 `Compile Error` 也算打通了链路——说明提交、等待、读结果三件事都通了，接下来只需要关心代码。
 
 测 shape 之所以放在这里，是因为它依赖「能提交、能读用时」这条链路。如果题目已经公开 shape，跳过这一步。
 
