@@ -7,8 +7,8 @@
     python prepare/remote/remote_verify.py prof --case case8 --shape 85,33 --launches 8
     python prepare/remote/remote_verify.py shell --cmd "npu-smi info"
 
-默认连 223.111.149.165:40093 root，密码每次运行都会重新询问。
 题目信息全部来自 config.json，换题目只改它。
+服务器地址不预设，用 --host / --port / REMOTE_HOST 提供，没有就交互询问。
 """
 
 from __future__ import annotations

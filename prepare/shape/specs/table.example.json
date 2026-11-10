@@ -2,14 +2,10 @@
   "kind": "table",
   "tolerance_ms": 2,
   "entries": [
-    { "time_ms": 30, "value": 1 },
-    { "time_ms": 60, "value": 4 },
-    { "time_ms": 90, "value": 13 },
-    { "time_ms": 120, "value": 32 },
-    { "time_ms": 150, "value": 33 },
-    { "time_ms": 180, "value": 64 },
-    { "time_ms": 210, "value": 128 },
-    { "time_ms": 240, "value": 256 }
+    { "time_ms": 30, "value": 2 },
+    { "time_ms": 60, "value": 3 },
+    { "time_ms": 90, "value": 4 },
+    { "time_ms": 120, "value": 5 }
   ],
   "fallback": { "time_ms": 480, "label": "not-in-table" }
 }

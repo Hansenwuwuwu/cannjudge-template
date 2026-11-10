@@ -20,8 +20,8 @@ import urllib.request
 from pathlib import Path, PurePosixPath
 
 SITE = "https://cannjudge.cn"
-DEFAULT_CONTEST = "2026_electronic"
-DEFAULT_PROBLEM = "swiglu"
+DEFAULT_CONTEST = "gcc_2026_mfg"
+DEFAULT_PROBLEM = "spmmsum"
 SECRET_DIR = Path.home() / ".cannjudge"
 COOKIE_FILE = SECRET_DIR / "cookie.txt"
 USER_ID_FILE = SECRET_DIR / "user_id.txt"

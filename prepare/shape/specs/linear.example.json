@@ -1,9 +1,9 @@
 {
   "kind": "linear",
-  "base_ms": 27,
-  "step_ms": 3,
+  "base_ms": 20,
+  "step_ms": 5,
   "offset": 0,
   "min_value": 1,
-  "max_value": 30,
+  "max_value": 20,
   "tolerance_ms": 2
 }

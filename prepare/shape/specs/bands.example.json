@@ -3,10 +3,8 @@
   "no_spin_below_ms": 1,
   "no_spin_label": "空转没有执行",
   "bands": [
-    { "lo_ms": 17, "hi_ms": 19, "label": "rank=1" },
-    { "lo_ms": 29, "hi_ms": 119, "label": "rank=2，M 下一轮再测" },
-    { "lo_ms": 130, "hi_ms": 134, "label": "rank=2 且 M>30" },
-    { "lo_ms": 145, "hi_ms": 149, "label": "rank=3" },
-    { "lo_ms": 160, "hi_ms": 164, "label": "rank>=4" }
+    { "lo_ms": 10, "hi_ms": 14, "label": "低档" },
+    { "lo_ms": 20, "hi_ms": 34, "label": "中档" },
+    { "lo_ms": 40, "hi_ms": 59, "label": "高档" }
   ]
 }

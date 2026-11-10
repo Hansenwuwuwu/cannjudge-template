@@ -19,8 +19,8 @@ try:
 except ImportError:  # pragma: no cover - 只在缺依赖时触发
     paramiko = None
 
-DEFAULT_HOST = "223.111.149.165"
-DEFAULT_PORT = 40093
+DEFAULT_HOST = ""
+DEFAULT_PORT = "22"
 DEFAULT_USER = "root"
 
 
@@ -137,15 +137,25 @@ class Connection:
 
 
 def ask_connection(args) -> Connection:
-    """默认用上一场比赛的机器，参数可覆盖；密码每次询问，不落盘。"""
-    host = getattr(args, "host", "") or os.environ.get("REMOTE_HOST") or DEFAULT_HOST
-    port_text = str(getattr(args, "port", "") or os.environ.get("REMOTE_PORT") or DEFAULT_PORT)
-    user = getattr(args, "user", "") or os.environ.get("REMOTE_USER") or DEFAULT_USER
+    """地址不预设：参数 > 环境变量 > 交互询问。密码每次询问，不落盘。"""
+    host = getattr(args, "host", "") or os.environ.get("REMOTE_HOST") or input("远端 host> ").strip()
+    if not host:
+        raise RemoteError("没有 host")
 
+    port_text = str(getattr(args, "port", "") or os.environ.get("REMOTE_PORT") or "")
+    if not port_text:
+        port_text = input(f"远端 port [{DEFAULT_PORT}]> ").strip() or DEFAULT_PORT
     try:
         port = int(port_text)
     except ValueError as exc:
         raise RemoteError(f"端口不是数字: {port_text}") from exc
+
+    user = (
+        getattr(args, "user", "")
+        or os.environ.get("REMOTE_USER")
+        or input(f"远端 user [{DEFAULT_USER}]> ").strip()
+        or DEFAULT_USER
+    )
 
     password = getattr(args, "password", "") or os.environ.get("REMOTE_PASSWORD")
     if not password:

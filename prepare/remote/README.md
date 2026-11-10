@@ -14,12 +14,12 @@ pip install paramiko
 
 ## 服务器
 
-默认就是上一场用的机器：
+服务器地址不预设，第一次用要自己提供：
 
 | 项 | 默认 | 覆盖 |
 | --- | --- | --- |
-| host | `223.111.149.165` | `--host` / `REMOTE_HOST` |
-| port | `40093` | `--port` / `REMOTE_PORT` |
+| host | 无，交互询问 | `--host` / `REMOTE_HOST` |
+| port | `22` | `--port` / `REMOTE_PORT` |
 | user | `root` | `--user` / `REMOTE_USER` |
 | password | 每次运行询问 | `--password` / `REMOTE_PASSWORD` |
 
@@ -27,7 +27,7 @@ pip install paramiko
 
 ## 准备 assets.tar.gz
 
-仓库不带上一场的二进制包。第一次用之前自己打一个，结构：
+仓库不带二进制包。第一次用之前自己打一个，结构：
 
 ```
 assets/
@@ -92,29 +92,37 @@ python prepare/remote/remote_verify.py all --host 10.0.0.1 --port 2222
 
 ## 题目配置
 
-上传哪四个文件、九点是什么，全部写在 `config.json` 里，脚本不再写死题目：
+上传哪四个文件、有哪些 case，全部写在 `config.json` 里，脚本不再写死题目：
 
 ```json
 {
-  "op_name": "swi_glu",
-  "class_name": "SwiGlu",
-  "audit_name": "swi_glu_current_audit",
-  "audit_class": "SwiGluCurrentAudit",
-  "aclnn_entry": "aclnnSwiGluCurrentAudit",
+  "op_name": "spmm_sum",
+  "class_name": "SpmmSum",
+  "audit_name": "spmm_sum_current_audit",
+  "audit_class": "SpmmSumCurrentAudit",
+  "aclnn_entry": "aclnnSpmmSumCurrentAudit",
   "files": {
-    "host.cpp": "op_host/swi_glu.cpp",
-    "kernel.cpp": "op_kernel/swi_glu.cpp",
-    "tiling.h": "op_kernel/swi_glu_tiling.h",
-    "key.h": "op_kernel/tiling_key_swi_glu.h"
+    "host.cpp": "op_host/spmm_sum.cpp",
+    "kernel.cpp": "op_kernel/spmm_sum.cpp",
+    "tiling.h": "op_kernel/spmm_sum_tiling.h",
+    "key.h": "op_kernel/tiling_key_spmm_sum.h"
   },
-  "cases": [
-    { "name": "case1", "shape": [1, 4] }
-  ]
+  "cases": []
 }
 ```
 
 `files` 的 key 是远端统一用的名字，value 是 `code/` 下的相对路径。
 `rename_gen.py` 按 `op_name → audit_name`、`class_name → audit_class` 做替换，避免和线上的同名算子冲突。
+
+`cases` 为空表示评测 shape 还没测。填法：
+
+```json
+"cases": [
+  { "name": "case1", "shape": [1, 4] }
+]
+```
+
+`shape` 写该题输入的主形状，具体到哪几维由题目决定。`spmmsum` 这类范围型题目，先跑通自适应实现，再用 `prepare/shape/` 的探针把 case 填进来。
 
 ## 输出怎么读
 

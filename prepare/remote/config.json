@@ -1,24 +1,14 @@
 {
-  "op_name": "swi_glu",
-  "class_name": "SwiGlu",
-  "audit_name": "swi_glu_current_audit",
-  "audit_class": "SwiGluCurrentAudit",
-  "aclnn_entry": "aclnnSwiGluCurrentAudit",
+  "op_name": "spmm_sum",
+  "class_name": "SpmmSum",
+  "audit_name": "spmm_sum_current_audit",
+  "audit_class": "SpmmSumCurrentAudit",
+  "aclnn_entry": "aclnnSpmmSumCurrentAudit",
   "files": {
-    "host.cpp": "op_host/swi_glu.cpp",
-    "kernel.cpp": "op_kernel/swi_glu.cpp",
-    "tiling.h": "op_kernel/swi_glu_tiling.h",
-    "key.h": "op_kernel/tiling_key_swi_glu.h"
+    "host.cpp": "op_host/spmm_sum.cpp",
+    "kernel.cpp": "op_kernel/spmm_sum.cpp",
+    "tiling.h": "op_kernel/spmm_sum_tiling.h",
+    "key.h": "op_kernel/tiling_key_spmm_sum.h"
   },
-  "cases": [
-    { "name": "case1", "shape": [1, 4] },
-    { "name": "case2", "shape": [2, 64] },
-    { "name": "case3", "shape": [512, 256] },
-    { "name": "case4", "shape": [1, 32] },
-    { "name": "case5", "shape": [4096, 128] },
-    { "name": "case6", "shape": [1, 1] },
-    { "name": "case7", "shape": [21, 13] },
-    { "name": "case8", "shape": [85, 33] },
-    { "name": "case9", "shape": [8192, 256] }
-  ]
+  "cases": []
 }

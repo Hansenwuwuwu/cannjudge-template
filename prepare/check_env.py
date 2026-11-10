@@ -1,7 +1,7 @@
 """前期准备自检：环境、目录、网络、题目模板、凭证状态。
 
     python prepare/check_env.py
-    python prepare/check_env.py --contest 2026_electronic --problem swiglu
+    python prepare/check_env.py --contest gcc_2026_mfg --problem spmmsum
 
 不提交任何东西，也不会修改 code/。缺什么会直接打印下一步该做什么。
 """
